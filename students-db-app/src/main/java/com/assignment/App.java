@@ -16,6 +16,7 @@ public class App {
 
         boolean loop = true;
         Scanner scanner = new Scanner(System.in);
+        // Interactivity to use all functions
         while (loop) {
         System.out.println("Get all students: 1");
         System.out.println("Add a student: 2");
@@ -55,6 +56,8 @@ public class App {
     }
 
     }
+    // Connect to the database
+    // Here you want to replace the values inside url, user, and password, to your own information
     void connectToDatabase() {
         String url = "jdbc:postgresql://localhost:5432/Assignment3";
         String user = "postgres";
@@ -74,12 +77,14 @@ public class App {
             e.printStackTrace();
         }
     }
+    // Returns a list of students from the database
     ArrayList<String> getAllStudents() {
         ArrayList<String> students = new ArrayList<>();
         try {
             Statement statement = connection.createStatement();
             String sql = "SELECT * FROM students";
             var resultSet = statement.executeQuery(sql);
+            // Get all the values from the result set
             while (resultSet.next()) {
                 int student_id = resultSet.getInt("student_id");
                 String first_name = resultSet.getString("first_name");
@@ -93,6 +98,8 @@ public class App {
         }
         return students;
     }
+
+    // Add a student, uses an insert value with all the given information to insert a new student into the student table
     boolean addStudent(String first_name, String last_name, String email, Date enrollment_date) {
         try {
             Statement statement = connection.createStatement();
@@ -104,6 +111,8 @@ public class App {
             return false;
         }
     }
+
+    // Update the student email given student id
     boolean updateStudentEmail(int student_id, String new_email) {
         try {
             Statement statement = connection.createStatement();
@@ -115,6 +124,8 @@ public class App {
             return false;
         }
     }
+
+    // Delete student given id
     boolean deleteStudent(int student_id) {
         try {
             Statement statement = connection.createStatement();
